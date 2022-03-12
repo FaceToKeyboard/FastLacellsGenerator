@@ -1,0 +1,56 @@
+# =============================================================================
+# This is an example config file.
+# Rename it to "config" (just removing the suffix) and adjust it to your needs.
+# You can ommit values here, as defaults are defined inside the main script.
+# If the main script finds a file named "config" in the same directory where
+# it resides, it will be "sourced" and thus your settings here will overwrite
+# the defaults defined there.
+# =============================================================================
+
+# ENABLE_XXX - enable data sources for database generation
+# Sources currently supported are:
+# OCI - OpenCellID database - http://www.opencellid.org/
+# MOZ - Mozilla Location Services (MLS) database - https://location.services.mozilla.com/
+# RCO - Radiocells.org database (formerly know as openbmap.org - https://radiocells.org/.
+# Please note that  OCI database requires free api key to access data
+
+ENABLE_OCI=1
+ENABLE_MOZ=1
+ENABLE_RCO=0
+
+# MCC: contry codes to restrict the resulting database to, separated with "|".
+# A list of available MCC values can be found e.g. at Wikipedia:
+# https://en.wikipedia.org/wiki/Mobile_country_code
+# For example "260|262" for Poland and Germany.
+# Leave dot+asterisk ".*" for all countries
+MCC="310|311|312|313|314|315|316"
+
+# RADIO: you can e.g. remove LTE if your phone does not support it
+RADIO="GSM|UMTS|LTE"
+
+# TOKEN: Your OpenCellID token. Without a valid token key, you cannot download
+# CellID data from OpenCellID. One key can download database only once per day.
+# Get your free key at http://opencellid.org/
+TOKEN="pk.41d1a45c646532bd9986b2ceadf1a9cd"
+
+# RCO_SRC_FILE - radiocells.org source database file, set "openbmap.sqlite" for entire world database
+# see https://radiocells.org/downloads for smaller country specific files, for example "pl.sqlite" for Poland 
+# radiocells.org offers only uncompressed data and slow download speeds, so downloading whole database can take some time
+# consider using country specific data for better performance
+RCO_SRC_FILE="openbmap.sqlite" 
+
+# TMP_DIR: for temporary files only, use disk if you don't have enough RAM, AND
+# remember to have enough disk space in /var/tmp for sqlite temporary files
+# (about 10GB for full database)!
+# Expect the CSV files using 4GB+ if you didn't restrict RADIO or MCC
+# (300MB+ for D-A-CH, i.e. MCC="228|232|262")
+# This vaiable should also affect SQLite
+TMPDIR='/tmp'
+
+# KEEP_FILES: whether to keep (1) or delete (0) the CSV files after processing
+# (and the DB file from the previous run).
+# As you can download the OpenCellID database only once per day and API key,
+# keeping the files might be useful for testing purposes. Setting this to 1
+# will keep exactly 1 backup (multiple backups are not implemented currently).
+KEEP_FILES=0
+
